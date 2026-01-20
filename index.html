@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap');
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.25), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.15), transparent 45%),
+    linear-gradient(135deg,#ff758c,#ff7eb3,#ff9a9e);
+  background-size:300% 300%;
+  animation:bgBreath 18s ease infinite;
+  color:#fff;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+}
+
+@keyframes bgBreath{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.screen{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:26px;
+  text-align:center;
+}
+
+.screen.active{
+  display:flex;
+  animation:fadeUp 1.6s cubic-bezier(.22,1,.36,1);
+}
+
+.card{
+  position:relative;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(20px) saturate(120%);
+  border-radius:30px;
+  padding:46px 30px;
+  max-width:560px;
+  width:100%;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.25);
+}
+
+h1{
+  font-size:2.4rem;
+  margin-bottom:16px;
+}
+
+.script{
+  font-family:'Pacifico',cursive;
+  font-size:1.7rem;
+  margin-bottom:12px;
+}
+
+p{
+  font-size:1.1rem;
+  line-height:1.8;
+  opacity:.95;
+}
+
+button{
+  margin-top:34px;
+  padding:15px 42px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#fff,#ffe6ee);
+  color:#ff4f81;
+  font-size:1rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:.35s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+button:hover{
+  transform:scale(1.08);
+}
+
+.heart{
+  font-size:3.8rem;
+  animation:pulse 2s ease-in-out infinite;
+  margin-bottom:16px;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.35)}
+}
+
+/* ✅ ONLY CHANGE IS HERE */
+.slider{
+  width:100%;
+  overflow:hidden;
+  margin-top:30px;
+  border-radius:26px;
+}
+
+.slides{
+  display:flex;
+  transition:transform 1.2s cubic-bezier(.22,1,.36,1);
+}
+
+.slides img{
+  min-width:100%;
+  height:460px;
+  object-fit:contain;
+  border-radius:26px;
+  box-shadow:0 30px 60px rgba(0,0,0,.4);
+  background:rgba(0,0,0,.25);
+  transition:.7s ease;
+}
+/* ✅ END OF CHANGE */
+
+.letter{
+  text-align:left;
+  margin-top:22px;
+  font-size:1.08rem;
+  line-height:1.9;
+}
+
+.fade-soft{
+  opacity:0;
+  animation:fadeSoft 2.5s forwards;
+}
+
+@keyframes fadeSoft{
+  to{opacity:1}
+}
+
+.final-love{
+  font-family:'Pacifico',cursive;
+  font-size:3.1rem;
+  margin-top:38px;
+  opacity:0;
+  animation:riseLove 3.5s ease forwards;
+  animation-delay:8s;
+}
+
+@keyframes riseLove{
+  from{opacity:0;transform:translateY(50px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.touch-heart{
+  position:fixed;
+  font-size:26px;
+  pointer-events:none;
+  animation:touchFloat 2s ease forwards;
+}
+
+@keyframes touchFloat{
+  from{opacity:1;transform:translateY(0) scale(1)}
+  to{opacity:0;transform:translateY(-90px) scale(2)}
+}
+
+canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(60px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+<audio id="music" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="confetti"></canvas>
+
+<!-- SCREEN 1 -->
+<div class="screen active" id="s1">
+  <div class="card">
+    <div class="heart">🎂</div>
+    <h1>Hey <span style="color:#ffeef2">my favorite person</span> ❤️</h1>
+    <p>
+      I didn’t want to give you just a gift this year.<br>
+      I wanted to give you a feeling.<br><br>
+      So I made something that feels like me,<br>
+      thinking about you.
+    </p>
+    <button onclick="next()">Open Slowly 🤍</button>
+  </div>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="screen" id="s2">
+  <div class="card">
+    <h1>Happy Birthday</h1>
+    <p class="script">to the one who feels like home</p>
+    <p>
+      There’s something about you that makes things softer.<br>
+      Even the hard days don’t feel as heavy when you’re around.
+    </p>
+    <button onclick="next()">Keep Going 💕</button>
+  </div>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen" id="s3">
+  <div class="card">
+    <h1>Pieces of You</h1>
+    <p>
+      Until I can hold you again, these pictures are where I keep you.
+    </p>
+
+    <div class="slider">
+      <div class="slides">
+        <img src="photo1.jpg">
+        <img src="photo2.jpg">
+        <img src="photo3.jpg">
+        <img src="photo4.jpg">
+        <img src="photo5.jpg">
+      </div>
+    </div>
+
+    <p style="font-size:.9rem;opacity:.8;margin-top:12px">
+      swipe or wait 🤍
+    </p>
+
+    <button onclick="next()">Read This 🤍</button>
+  </div>
+</div>
+
+<!-- SCREEN 4 -->
+<div class="screen" id="s4">
+  <div class="card">
+    <div class="script">A little letter for you</div>
+
+    <div class="letter">
+      <p class="fade-soft" style="animation-delay:.5s">
+        Happy Birthday to the girl who feels like home.
+        You make ordinary days softer just by being you.
+        Your smile is still my favorite comfort in this world.
+      </p>
+      <p class="fade-soft" style="animation-delay:2s">
+       Loving you has been the easiest, calmest thing I’ve known.
+        No matter the distance, you’re always close to my heart.
+        Today and always, I choose you.
+      </p>
+    </div>
+
+    <div class="final-love">
+      Happy Birthday<br>Kanna 💕
+    </div>
+  </div>
+</div>
+
+<script>
+let c=1
+const music=document.getElementById("music")
+
+function next(){
+  document.getElementById(`s${c}`).classList.remove("active")
+  c++
+  document.getElementById(`s${c}`).classList.add("active")
+  if(c===2){
+    music.play().catch(()=>{})
+    confetti()
+  }
+}
+
+function toggleMusic(){
+  music.paused?music.play():music.pause()
+}
+
+/* Confetti */
+const canvas=document.getElementById("confetti")
+const ctx=canvas.getContext("2d")
+canvas.width=innerWidth
+canvas.height=innerHeight
+let p=[]
+
+function confetti(){
+  for(let i=0;i<160;i++){
+    p.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*6+4,
+      d:Math.random()*40,
+      c:`hsl(${Math.random()*360},100%,75%)`
+    })
+  }
+  update()
+}
+
+function update(){
+  ctx.clearRect(0,0,canvas.width,canvas.height)
+  p.forEach(e=>{
+    ctx.beginPath()
+    ctx.fillStyle=e.c
+    ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
+    ctx.fill()
+    e.y+=Math.cos(e.d)+1
+    if(e.y>canvas.height)e.y=0
+  })
+  requestAnimationFrame(update)
+}
+
+/* Slider */
+const slides=document.querySelector(".slides")
+const images=slides.querySelectorAll("img")
+let index=0
+
+function updateSlider(){
+  slides.style.transform=`translateX(-${index*100}%)`
+}
+
+setInterval(()=>{
+  index=(index+1)%images.length
+  updateSlider()
+},3500)
+
+let startX=0
+slides.addEventListener("touchstart",e=>startX=e.touches[0].clientX)
+slides.addEventListener("touchend",e=>{
+  let endX=e.changedTouches[0].clientX
+  if(startX-endX>50) index=(index+1)%images.length
+  if(endX-startX>50) index=(index-1+images.length)%images.length
+  updateSlider()
+})
+
+/* Touch hearts */
+document.addEventListener("click",e=>{
+  let h=document.createElement("div")
+  h.className="touch-heart"
+  h.innerText="💗"
+  h.style.left=e.clientX+"px"
+  h.style.top=e.clientY+"px"
+  document.body.appendChild(h)
+  setTimeout(()=>h.remove(),2000)
+})
+</script>
+
+</body>
+</html>
