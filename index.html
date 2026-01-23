@@ -60,22 +60,9 @@ body{
     inset 0 0 0 1px rgba(255,255,255,.25);
 }
 
-h1{
-  font-size:2.4rem;
-  margin-bottom:16px;
-}
-
-.script{
-  font-family:'Pacifico',cursive;
-  font-size:1.7rem;
-  margin-bottom:12px;
-}
-
-p{
-  font-size:1.1rem;
-  line-height:1.8;
-  opacity:.95;
-}
+h1{font-size:2.4rem;margin-bottom:16px;}
+.script{font-family:'Pacifico',cursive;font-size:1.7rem;margin-bottom:12px;}
+p{font-size:1.1rem;line-height:1.8;opacity:.95;}
 
 button{
   margin-top:34px;
@@ -91,9 +78,7 @@ button{
   box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 
-button:hover{
-  transform:scale(1.08);
-}
+button:hover{transform:scale(1.08);}
 
 .heart{
   font-size:3.8rem;
@@ -106,17 +91,18 @@ button:hover{
   50%{transform:scale(1.35)}
 }
 
-/* ✅ ONLY CHANGE IS HERE */
+/* PHOTO SECTION */
 .slider{
   width:100%;
   overflow:hidden;
   margin-top:30px;
   border-radius:26px;
+  touch-action: pan-y;
 }
 
 .slides{
   display:flex;
-  transition:transform 1.2s cubic-bezier(.22,1,.36,1);
+  transition:transform 0.6s ease;
 }
 
 .slides img{
@@ -126,25 +112,12 @@ button:hover{
   border-radius:26px;
   box-shadow:0 30px 60px rgba(0,0,0,.4);
   background:rgba(0,0,0,.25);
-  transition:.7s ease;
-}
-/* ✅ END OF CHANGE */
-
-.letter{
-  text-align:left;
-  margin-top:22px;
-  font-size:1.08rem;
-  line-height:1.9;
 }
 
-.fade-soft{
-  opacity:0;
-  animation:fadeSoft 2.5s forwards;
-}
-
-@keyframes fadeSoft{
-  to{opacity:1}
-}
+/* LETTER */
+.letter{ text-align:left; margin-top:22px; font-size:1.08rem; line-height:1.9; }
+.fade-soft{ opacity:0; animation:fadeSoft 2.5s forwards; }
+@keyframes fadeSoft{ to{opacity:1} }
 
 .final-love{
   font-family:'Pacifico',cursive;
@@ -172,11 +145,7 @@ button:hover{
   to{opacity:0;transform:translateY(-90px) scale(2)}
 }
 
-canvas{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
+canvas{ position:fixed; inset:0; pointer-events:none; }
 
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(60px)}
@@ -184,7 +153,6 @@ canvas{
 }
 </style>
 </head>
-
 
 <body>
 
@@ -227,9 +195,7 @@ canvas{
 <div class="screen" id="s3">
   <div class="card">
     <h1>Pieces of You</h1>
-    <p>
-      Until I can hold you again, these pictures are where I keep you.
-    </p>
+    <p>Until I can hold you again, these pictures are where I keep you.</p>
 
     <div class="slider">
       <div class="slides">
@@ -261,7 +227,7 @@ canvas{
         Your smile is still my favorite comfort in this world.
       </p>
       <p class="fade-soft" style="animation-delay:2s">
-       Loving you has been the easiest, calmest thing I’ve known.
+        Loving you has been the easiest, calmest thing I’ve known.
         No matter the distance, you’re always close to my heart.
         Today and always, I choose you.
       </p>
@@ -324,10 +290,12 @@ function update(){
   requestAnimationFrame(update)
 }
 
-/* Slider */
+/* ✅ FIXED SLIDER */
 const slides=document.querySelector(".slides")
 const images=slides.querySelectorAll("img")
 let index=0
+let startX=0
+let isSwiping=false
 
 function updateSlider(){
   slides.style.transform=`translateX(-${index*100}%)`
@@ -338,13 +306,21 @@ setInterval(()=>{
   updateSlider()
 },3500)
 
-let startX=0
-slides.addEventListener("touchstart",e=>startX=e.touches[0].clientX)
+slides.addEventListener("touchstart",e=>{
+  startX=e.touches[0].clientX
+  isSwiping=true
+})
+
 slides.addEventListener("touchend",e=>{
+  if(!isSwiping) return
   let endX=e.changedTouches[0].clientX
-  if(startX-endX>50) index=(index+1)%images.length
-  if(endX-startX>50) index=(index-1+images.length)%images.length
+  let diff=startX-endX
+
+  if(diff>50) index=(index+1)%images.length
+  if(diff<-50) index=(index-1+images.length)%images.length
+
   updateSlider()
+  isSwiping=false
 })
 
 /* Touch hearts */
